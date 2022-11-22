@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminModulesController;
 use App\Http\Controllers\AdminRegionController;
 use App\Http\Controllers\AdminSecurityController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\FarmerDashboardController;
 use App\Http\Controllers\KinController;
 use App\Http\Controllers\SetupController;
@@ -141,16 +142,13 @@ Route::controller(FarmerDashboardController::class)
         Route::get('dashboard_farmer', 'index');
 });
 
-// laravel b.i
-Route::controller(UserDashboard::class)
+// business intelligence
+Route::controller(AnalyticsController::class)
     ->middleware('auth')
     ->group(function () {
-        Route::get('user_analysis', 'widgets');
+        Route::get('user_analysis', 'userAnalysis');
 });
-Route::controller(DashboardController::class)
-    ->group(function () {
-        Route::get('dashboards', 'getDashboards');
-});
+
 
 // Route::group( function () {
 //     Route::get('/dashboards', 'DashboardController@getDashboards');

@@ -11,30 +11,9 @@ use LaravelBi\LaravelBi\Metrics\CountMetric;
 
 class AnalyticsController extends Controller
 {
-    public $model  = User::class;
-    public $uriKey = 'users';
-    public $name   = 'User dashboard';
-
-    public function filters()
+    public function userAnalysis()
     {
-        return [
-            DateFilter::create('created_at', 'Created at')
-        ];
-    }
 
-    public function widgets()
-    {
-        
-        $number = BigNumber::create('user-count', 'Registered users')
-            ->metric(
-                CountMetric::create('count', 'Count')
-                    ->color('#ff5555')
-            )
-            ->width('1/3');
-        
-        return view('admin.analytics.index', compact(
-            'number'
-        ));    
-    
+        return view('admin.analytics.index');
     }
 }

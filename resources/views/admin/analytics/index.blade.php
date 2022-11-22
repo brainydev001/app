@@ -28,15 +28,18 @@
         {{-- include alert messages --}}
         @include('alerts.messages')
 
-        <div>
-            @foreach ($number as $item)
-                {{ $number->count }}
-            @endforeach
-        </div>
+        {{-- include bar graph --}}
+        @include('admin.analytics.inc.inline_chart')
        
 
      
     </div>
+@endsection
+
+{{-- section custom scripts --}}
+@section('adminScripts')
+    {{-- include datatable scripts --}}
+    @include('admin.analytics.inc.js.inline')
 @endsection
 
 

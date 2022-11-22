@@ -1,12 +1,86 @@
  <!-- Navbar -->
- <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+ <nav class="main-header navbar navbar-expand navbar-primary navbar-dark ">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
+      {{-- menu --}}
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
+
+      {{-- Dashboard  --}}
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url('dashboard_index') }}" class="nav-link">Dashboard</a>
+        <a href="{{ url('dashboard_index') }}" class="nav-link"><i class="fas fa-home "></i> Dashboard</a>
+      </li>
+    
+      {{-- User dropdown --}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <span>
+          <i class="fas fa-users"></i> 
+          </span>
+          <span>
+          User
+          </span>
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#one"><i class="fas fa-user-plus p-1 border-bottom text-gray"> Create New User</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-user-tie p-1 border-bottom text-gray">  All staff</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-user-alt p-1 border-bottom text-gray">All farmers</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-archive"></i> Kin list</a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-archive p-1 border-bottom text-gray"></i>Archived Members</i></a>
+        </div>
+      </li>
+
+      {{-- modules dropdown --}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <span>
+            <i class="fas fa-book pr-1"></i>
+          </span>
+          <span>
+            Module
+          </span>
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#one">Events</a>
+          <a class="dropdown-item" href="#two">Activity</a>
+          <a class="dropdown-item" href="#two">Module</a>
+        </div>
+      </li>
+
+       {{-- input dropdown --}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        <span>
+          <i class="fas fa-chart-pie pr-1"></i>
+        </span>
+        <span>
+          Input
+        </span>
+        </a>
+
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#one">Request</a>
+          <a class="dropdown-item" href="#two">All input</a>
+        </div>
+      </li>
+
+       {{-- Payment nav dropdown --}}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <span>
+            <i class="fas fa-chart-pie"></i>
+          </span>
+          <span>
+            Payment
+          </span>
+          </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#one">All payments</a>
+          <a class="dropdown-item" href="#two">PAFID to farmer</a>
+          <a class="dropdown-item" href="#two">PAFID to staff</a>
+          <a class="dropdown-item" href="#two">Pending payment</a>
+        </div>
       </li>
     </ul>
 
