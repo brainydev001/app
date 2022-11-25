@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Kin;
 use App\Models\Type;
+use App\Models\Region;
+use App\Models\Role;
 
 class AdminUserController extends Controller
 {
@@ -63,7 +65,27 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        //
+        $types = Type::all();
+        $roles = Role::orderBy('id', 'desc')->get();
+        $regions = Region::where([
+            ['type', '=', 'Region']
+        ])->orderBy('id', 'desc')->get();
+        $constituencies = Region::where([
+            ['type', '=', 'Constituency']
+        ])->orderBy('id', 'desc')->get();
+        $wards = Region::where([
+            ['type', '=', 'Ward']
+        ])->orderBy('id', 'desc')->get();
+
+
+
+        return view('admin.users.create', compact(
+            'types',
+            'regions',
+            'constituencies',
+            'wards',
+            'roles'
+        ));
     }
 
     /**
@@ -74,7 +96,7 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request['first_name']);
     }
 
     /**

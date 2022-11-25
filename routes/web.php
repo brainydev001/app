@@ -12,6 +12,7 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\FarmerDashboardController;
 use App\Http\Controllers\KinController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\SmSController;
 use App\Http\Controllers\UserLogsController;
 use Illuminate\Support\Facades\Route;
 use LaravelBi\LaravelBi\Dashboard;
@@ -86,6 +87,8 @@ Route::controller(AdminUserController::class)
     ->middleware('auth')
     ->group(function () {
         Route::get('user/{type}', 'index')->middleware('permission:access user');
+        Route::get('user_create', 'create')->middleware('permission:access user');
+        Route::post('create_user', 'store')->name('create_user')->middleware('permission:access user');
 });
 
 /**
@@ -98,6 +101,15 @@ Route::controller(AccessControlController::class)
         Route::get('list/{type}', 'lists')->middleware('permission:access access control');
         Route::get('create_role', 'create')->middleware('permission:access access control');
         Route::post('role_create/{origin}', 'store')->name('role_create')->middleware('permission:create role');
+});
+
+/**
+ * Route to access access control and security
+ */
+Route::controller(SmSController::class)
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('sms/{id}/{otp}', 'quickMessage')->name('sms');
 });
 
 /**

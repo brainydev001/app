@@ -43,7 +43,7 @@
                      </a>
                      <ul class="nav nav-treeview bg-grey text-dark border">
                          <li class="nav-item">
-                             <a href="ml" class="nav-link">
+                             <a href="{{ url('user_create') }}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
                                  <p>Create new user</p>
                              </a>

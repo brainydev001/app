@@ -28,6 +28,8 @@
     <link rel="stylesheet" href={{ asset('fontawsome/css/all.css') }}>
     {{-- forms css --}}
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    {{-- custom auth css --}}
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
     {{-- page title --}}
     <title>PAFID ADMIN</title>
 </head>

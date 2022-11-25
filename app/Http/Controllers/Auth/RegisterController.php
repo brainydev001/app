@@ -12,6 +12,8 @@ use App\Models\Region;
 use App\Models\Type;
 use App\Models\Kin;
 use Carbon\Carbon;
+use App\Models\OTP;
+use Illuminate\Support\Facades\Http;
 
 class RegisterController extends Controller
 {
@@ -36,6 +38,27 @@ class RegisterController extends Controller
     // protected $redirectTo ='dashboard_index';
     public function redirectTo()
     {
+        // randomize a number between 10 -1000
+        $digits = 5;
+        $randomNumber = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+        // create user one time password
+        $data = [
+            'user_id' => auth()->user()->id,
+            'otp' => $randomNumber,
+            'verified' => false
+        ];
+
+        // save otp data to otp table
+        $otp = OTP::create($data);
+
+        // send otp to user
+
+        // user variables
+        $userId = auth()->user()->id;
+        $userOtp = $data['otp'];
+
+        $this->otp($userId, $userOtp);
+
         // get user type id
         $user_type = auth()->user()->type_id;
 
@@ -154,4 +177,11 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    // private function to send user the otp
+    private function otp($userId, $userOtp)
+    {
+        
+    }
+    
 }
