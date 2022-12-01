@@ -40,8 +40,8 @@ class AdminBudgetController extends Controller
         if($type == 'Event'){
             $requisition = explode(',', $request['requsition_note']);
             Budget::create([
-                'amount' => $requisition[0],
-                'estimated_budget' => $request['estimated_amount'],
+                'amount' => $request['amount'],
+                'estimated_budget' => $requisition[0],
                 'requsition_note' => $requisition[1],
                 'examination_note' => 'Pending Examination',
                 'event_id' => $id,
@@ -51,12 +51,12 @@ class AdminBudgetController extends Controller
         }elseif($type == 'Activity'){
             $requisition = explode(',', $request['requsition_note']);
             Budget::create([
-                'amount' => $requisition[0],
-                'estimated_budget' => '0',
+                'amount' => $request['amount'],
+                'estimated_budget' => $requisition[0],
                 'requsition_note' => $requisition[1],
                 'examination_note' => 'Pending Examination',
+                'event_id' => $id,
                 'relation_id' => $id,
-                'activity_id' => $id,
                 'created_by' => auth()->user()->id
             ]);
         }
