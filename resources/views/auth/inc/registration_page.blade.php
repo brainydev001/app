@@ -44,11 +44,27 @@
     </div>
     
     {{-- email form item --}}
-    <div class="col-md-6 mt-4">
+    {{-- <div class="col-md-6 mt-4">
         <label for="" class="app-text-medium">Email:</label><br>
         <div class="auth-form-msg"></div>
         <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
         @error('email')
+            <span class="text-sm text-red" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div> --}}
+
+    {{-- gender --}}
+    <div class="col-md-6 mt-4">
+        <label for="" class="app-text-medium">Gender:</label><br>
+        <div class="auth-form-msg"></div>
+        <select name="gender" class="form-control">
+            <option disabled>Choose your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        @error('gender')
             <span class="text-sm text-red" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

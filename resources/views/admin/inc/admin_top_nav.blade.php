@@ -22,12 +22,12 @@
           User
           </span>
         </a>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu bg-yellow">
           <a class="dropdown-item" href="#one"><i class="fas fa-user-plus p-1 border-bottom text-gray"> Create New User</i></a>
           <a class="dropdown-item" href="#two"><i class="fas fa-user-tie p-1 border-bottom text-gray">  All staff</i></a>
           <a class="dropdown-item" href="#two"><i class="fas fa-user-alt p-1 border-bottom text-gray">All farmers</i></a>
-          <a class="dropdown-item" href="#two"><i class="fas fa-archive"></i> Kin list</a>
-          <a class="dropdown-item" href="#two"><i class="fas fa-archive p-1 border-bottom text-gray"></i>Archived Members</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-archive p-1 border-bottom text-gray"> Kin list</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-archive p-1 border-bottom text-gray">Archived Members</i></a>
         </div>
       </li>
 
@@ -41,10 +41,10 @@
             Module
           </span>
         </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#one">Events</a>
-          <a class="dropdown-item" href="#two">Activity</a>
-          <a class="dropdown-item" href="#two">Module</a>
+        <div class="dropdown-menu bg-yellow">
+          <a class="dropdown-item" href="#one"><i class="fas fa-calendar-plus p-1 border-bottom text-gray"> Events</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-chart-line p-1 border-bottom text-gray">Activity</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-chart-pie  p-1 border-bottom text-gray">Module</i></a>
         </div>
       </li>
 
@@ -59,9 +59,9 @@
         </span>
         </a>
 
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#one">Request</a>
-          <a class="dropdown-item" href="#two">All input</a>
+        <div class="dropdown-menu bg-yellow">
+          <a class="dropdown-item" href="#one"><i class="fas fa-arrow-left p-1 border-bottom text-gray"> Request</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-mouse p-1 border-bottom text-gray"> All input</i></a>
         </div>
       </li>
 
@@ -75,11 +75,11 @@
             Payment
           </span>
           </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#one">All payments</a>
-          <a class="dropdown-item" href="#two">PAFID to farmer</a>
-          <a class="dropdown-item" href="#two">PAFID to staff</a>
-          <a class="dropdown-item" href="#two">Pending payment</a>
+        <div class="dropdown-menu bg-yellow">
+          <a class="dropdown-item" href="#one"><i class="fas fa-money-bill-wave p-1 border-bottom text-gray ">  All payments</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-user p-1 border-bottom text-gray"> PAFID to farmer</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-male p-1 border-bottom text-gray"> PAFID to staff</i></a>
+          <a class="dropdown-item" href="#two"><i class="fas fa-spinner p-1 border-bottom text-gray">Pending payment</i></a>
         </div>
       </li>
     </ul>

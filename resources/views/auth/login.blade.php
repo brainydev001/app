@@ -13,9 +13,9 @@
     {{-- form --}}
     <div class="col-md-6 mb-4 card p-2 rounded-0 mt-3 text-center" style="margin:auto;">
         <h3 class="app-text-bold mt-3 mb-3">Login</h3>
-        @if ($errors->has('email'))
+        @if ($errors->has('phone_number'))
             <div class="alert alert-danger p-3 app-text-medium">
-                Incorrect email, phone number or password
+                Incorrect phone number or password
             </div>
         @endif
         <form method="POST" action="{{ route('login') }}">
@@ -23,8 +23,8 @@
             <div class="row app-auth-form text-left">
                 {{-- form item --}}
                 <div class="col-md-6 mt-4">
-                    <label for="" class="app-text-medium">Email:</label>
-                    <input type="email" name="email" placeholder="Email/Phone Number" required>
+                    <label for="" class="app-text-medium">Phone Number:</label>
+                    <input type="text" name="phone_number" placeholder="Phone Number" required>
                     <div class="auth-form-msg"></div>
                 </div>
                 {{-- form item --}}

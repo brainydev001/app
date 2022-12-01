@@ -17,6 +17,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Phone Number</th>
+                    <th>Age</th>
                     @if ($type == 'kin')
                         <th>I.D Number</th>
                     @endif
@@ -39,6 +40,7 @@
                             <td>{{ $user->first_name }}</td>
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->phone_number }}</td>
+                            <td>{{ $user->age }}</td>
                             @if ($type == 'kin')
                                 <td>{{ $user->id_number }}</td>
                             @endif

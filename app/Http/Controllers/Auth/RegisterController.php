@@ -54,31 +54,47 @@ class RegisterController extends Controller
         // send otp to user
 
         // user variables
-        $userId = auth()->user()->id;
-        $userOtp = $data['otp'];
+        $auth = auth()->user();
+        $userphone = auth()->user()->phone_number;
+        $userOtp = $otp->otp;
 
-        $this->otp($userId, $userOtp);
+        // send otp to user
 
-        // get user type id
-        $user_type = auth()->user()->type_id;
+        $this->otp($auth, $userphone, $userOtp);
+
+        // otp check
+        $id = auth()->user()->id;
+        $check = OTP::where([
+            ['user_id', '=', $id],
+            ['verified', '=', false]
+        ])->latest()->first();
+        
+        // otp id
+        $otpId = OTP::where([
+            ['user_id', '=', $id],
+            ['verified', '=', false]
+        ])->pluck('id')->first();
+
 
         // using the id check on the types table
+        // get user type id
+        $user_type = auth()->user()->type_id;
         $type = Type::find($user_type);
         $type_name = $type->display_name;
 
-        // compare the major types and redirect accordingly
-        if ($type_name == 'Administrator') {
-
+        // display otp sign in form
+        if($check){
+            return 'otpValidate/'.$otpId . auth()->user()->username;
+        }elseif(!$check && $type_name == 'Administrator'){
+            // compare the major types and redirect accordingly
             return 'dashboard_index' . auth()->user()->username;
-
-        } elseif ($type_name == 'Farmer') {
-    
+        }elseif(!$check && $type_name == 'Farmer'){
             // check if farmer has registered kin
             $id = auth()->user()->id;
-            $check = Kin::where([
+            $kin_check = Kin::where([
                 ['user_id', '=', $id]
-            ])->first(); 
-            if($check){
+            ])->first();
+            if($kin_check){
                 return 'dashboard_farmer' . auth()->user()->username;
             }else{
                 return 'kin' . auth()->user()->username;
@@ -131,7 +147,8 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:25', 'unique:users'],
             'age' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'gender' => ['required'],
+            'email' => ['string', 'email', 'max:255', 'unique:users'],
             'county' => ['required', 'string', 'max:255'],
             'sub_county' => ['required', 'string', 'max:255'],
             'type_id' => ['required', 'integer'],
@@ -166,7 +183,7 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'phone_number' => $data['phone_number'],
             'age' => $age,
-            'email' => $data['email'],
+            'gender' => $data['gender'],
             'county' => $data['county'],
             'sub_county' => $data['sub_county'],
             'region_id' => $data['region_id'],
@@ -179,9 +196,48 @@ class RegisterController extends Controller
     }
 
     // private function to send user the otp
-    private function otp($userId, $userOtp)
+    private function otp($auth, $userphone, $userOtp)
     {
+        $phone = explode('0' , $userphone)[1];
+
+        // sms dynamic content
+        $phone_value = '254'.$phone;
+        $otp_value = $userOtp;
         
+        // message content
+        $message ='Your one time password valid for 24hours is '.$otp_value.'. Login in and use the O.T.P to access your dashboard.';
+        
+        // send otp to user phone number
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://smsportal.hostpinnacle.co.ke/SMSApi/send",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "userid=Pafid&password=xxxxx&sendMethod=quick&mobile=".$phone_value."&msg=".$message."&senderid=HPKSMS&msgType=text&duplicatecheck=true&output=json",
+            CURLOPT_HTTPHEADER => array(
+                "apikey: 14e9d08f986cdac9422769a9047d591e43313c43",
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            return $err;
+        } else {
+            return $response;
+        }
+
     }
-    
+
 }

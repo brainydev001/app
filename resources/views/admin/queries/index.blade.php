@@ -14,7 +14,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">{{ $type }} Manager</h1>
+                        <h1 class="m-0 text-dark">Query Manager</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -25,27 +25,36 @@
             </div><!-- /.container-fluid -->
         </div>
 
-        {{-- action bar --}}
-        <a class="btn btn-secondary m-2 text-white" href="{{ 'create/' . $type }}">
-            <span>
-                Create {{ $type }}
-            </span>
-            <span class="ml-2 text-white">
-                <i class="fas fa-plus"></i>
-            </span>
-        </a>
-
         {{-- include alert messages --}}
         @include('alerts.messages')
 
-        {{-- datatable --}}
-        @include('admin.modules.inc.datatable')
+        {{-- action bar --}}
+        <a href="{{ url('query/activity') }}">
+            <button class="btn btn-secondary m-2 text-white">
+                <span>
+                    Activities
+                </span>
+            </button>
+        </a>
 
+        {{-- action bar --}}
+        <a href="{{ url('query/event') }}">
+            <button class="btn btn-secondary m-2 text-white">
+                <span>
+                    Events
+                </span>
+            </button>
+        </a>
+
+        {{-- action bar --}}
+        <a href="{{ url('query/module') }}">
+            <button class="btn btn-secondary m-2 text-white">
+                <span>
+                    Module
+                </span>
+            </button>
+        </a>
     </div>
+
 @endsection
 
-{{-- section custom scripts --}}
-@section('adminScripts')
-    {{-- include datatable scripts --}}
-    @include('admin.modules.inc.datatables_script')
-@endsection

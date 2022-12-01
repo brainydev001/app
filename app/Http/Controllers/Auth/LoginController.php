@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Models\Kin;
+use App\Models\OTP;
 
 class LoginController extends Controller
 {
@@ -32,31 +33,44 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     public function redirectTo()
     {
+        // otp check
+        $id = auth()->user()->id;
+        $check = OTP::where([
+            ['user_id', '=', $id],
+            ['verified', '=', false]
+        ])->latest()->first();
+
+        // otp id
+        $otpId = OTP::where([
+            ['user_id', '=', $id],
+            ['verified', '=', false]
+        ])->pluck('id')->first();
+        
+        // using the id check on the types table
         // get user type id
         $user_type = auth()->user()->type_id;
-
-        // using the id check on the types table
         $type = Type::find($user_type);
         $type_name = $type->display_name;
 
-        // compare the major types and redirect accordingly
-        if ($type_name == 'Administrator') {
-
+        // display otp sign in form
+        if($check){
+            return 'otpValidate/'.$otpId . auth()->user()->username;
+        }elseif(!$check && $type_name == 'Administrator'){
+            // compare the major types and redirect accordingly
             return 'dashboard_index' . auth()->user()->username;
-
-        } elseif ($type_name == 'Farmer') {
-    
+        }elseif(!$check && $type_name == 'Farmer'){
             // check if farmer has registered kin
             $id = auth()->user()->id;
-            $check = Kin::where([
+            $kin_check = Kin::where([
                 ['user_id', '=', $id]
             ])->first();
-            if($check){
+            if($kin_check){
                 return 'dashboard_farmer' . auth()->user()->username;
             }else{
                 return 'kin' . auth()->user()->username;
             }
         };
+    
     }
 
     /**
@@ -69,6 +83,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // use phone number to login
+    public function username(){
+        return 'phone_number';
+    }
+
     /**
      * Logout redirect
      */
@@ -76,4 +95,5 @@ class LoginController extends Controller
         auth()->logout();
         return redirect('/login')->with('info-message','You are logged out. Login to continue');
     }
+
 }

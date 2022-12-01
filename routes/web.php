@@ -2,6 +2,7 @@
 
 use App\Bi\Dashboards\UserDashboard;
 use App\Http\Controllers\AccessControlController;
+use App\Http\Controllers\AdminBudgetController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminMemberTypeController;
 use App\Http\Controllers\AdminModulesController;
@@ -9,8 +10,12 @@ use App\Http\Controllers\AdminRegionController;
 use App\Http\Controllers\AdminSecurityController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FarmerDashboardController;
 use App\Http\Controllers\KinController;
+use App\Http\Controllers\OTPController;
+use App\Http\Controllers\QueryManagerController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\SmSController;
 use App\Http\Controllers\UserLogsController;
@@ -66,7 +71,7 @@ Route::controller(AdminMemberTypeController::class)
     ->group(function () {
         Route::get('type_index', 'index')->middleware('permission:access type');
         Route::post('type_create', 'create')->name('type_create')->middleware('permission:create type');
-        Route::get('type_delete/{id}', 'destroy')->middleware('permission:delete_type');
+        Route::get('type_delete/{id}', 'destroy')->middleware('permission:delete type');
 });
 
 /**
@@ -104,12 +109,21 @@ Route::controller(AccessControlController::class)
 });
 
 /**
- * Route to access access control and security
+ * Route to access otp
  */
-Route::controller(SmSController::class)
+Route::controller(OTPController::class)
     ->middleware('auth')
     ->group(function () {
-        Route::get('sms/{id}/{otp}', 'quickMessage')->name('sms');
+        Route::get('otpValidate/{id}', 'view');
+        Route::post('otp_validator/{id}', 'authenticate')->name('otp_validator');
+});
+
+/**
+ * Route to access sms controller
+ */
+Route::controller(SmSController::class)
+    ->group(function () {
+        Route::get('sms', 'quickMessage');
 });
 
 /**
@@ -120,9 +134,52 @@ Route::controller(AdminModulesController::class)
     ->group(function () {
         Route::get('module/{type}', 'index');
         Route::get('module/create/{type}', 'create');
+        Route::post('store/{type}', 'store')->name('store');
+        Route::get('module_view/{id}/{type}', 'show')->name('module_view');
+        Route::post('create_module', 'createModule')->name('create_module');
         
-});
+}); 
 
+/**
+ * Route to to access queries
+ */
+Route::controller(QueryManagerController::class)
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('query', 'index');
+        Route::get('query/{type}', 'show');
+        Route::get('approve/{id}/{type}', 'approvePage')->name('approve');
+        Route::get('approve_request/{type}/{id}', 'approveRequest')->name('approve_request');
+        Route::get('reject_request/{type}/{id}', 'rejectRequest')->name('reject_request');
+        Route::post('amend/{type}/{id}', 'amendRequest')->name('amend');
+
+        
+}); 
+
+/**
+ * Route to requisition
+ */
+Route::controller(AdminBudgetController::class)
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('requisition/{type}/{id}', 'index')->name('requisition');
+        Route::post('budget_store/{type}/{id}', 'requisition')->name('budget_store');
+        Route::get('budget_remove/{id}/{type}', 'removeBudget')->name('budget_remove');
+        
+}); 
+
+
+/**
+ * Route to expenses
+ */
+Route::controller(ExpenseController::class)
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('expense', 'index');
+        Route::get('expense_create', 'create');
+        Route::post('expense_store', 'store')->name('expense_store');
+        
+}); 
 /**
  * Route to access user logs on the eco system
  */

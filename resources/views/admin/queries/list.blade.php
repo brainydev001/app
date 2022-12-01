@@ -14,15 +14,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Create {{ $type }}</h1>
+                        <h1 class="m-0 text-dark"></h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item text-dark"><a href="#" class="text-dark">{{ $type }}
-                                    Manager</a></li>
-                        </ol>
-                        <ol class="breadcrumb float-sm-right mr-1">
-                            <li class="breadcrumb-item"><a href="{{ url('dashboard_index') }}">Dashboard /</a></li>
+                            <li class="breadcrumb-item"><a href="dashboard_index">Dashboard</a></li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -32,15 +28,15 @@
         {{-- include alert messages --}}
         @include('alerts.messages')
 
-
-        {{-- include crud module --}}
-        @include('admin.modules.inc.crud_module')
+        {{-- include datatable --}}
+        @include('admin.queries.inc.datatable')
 
     </div>
+
 @endsection
 
 {{-- section custom scripts --}}
 @section('adminScripts')
     {{-- include datatable scripts --}}
-    @include('admin.modules.inc.datatables_script')
+    @include('admin.queries.inc.datatables_script')
 @endsection

@@ -106,51 +106,51 @@
                     </ul>
                 </li>
 
-                 {{-- inputs --}}
+                 {{-- Expenses --}}
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
                          <p>
-                             Input
+                             Expenses
                              <i class="right fas fa-angle-left"></i>
                          </p>
                      </a>
                      <ul class="nav nav-treeview border">
                          <li class="nav-item">
-                             <a href="#" class="nav-link">
+                             <a href="{{ url('expense_create') }}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>Requests</p>
+                                 <p>Create Expense</p>
                              </a>
                          </li>
                          <li class="nav-item">
                              <a href="#" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>All Inputs</p>
+                                 <p>All Expenses</p>
                              </a>
                          </li>
                      </ul>
                  </li>
 
-                 {{-- outputs --}}
+                 {{-- Queries --}}
                  <li class="nav-item has-treeview">
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-chart-pie"></i>
                          <p>
-                             Output
+                             Queries
                              <i class="fas fa-angle-left right"></i>
                          </p>
                      </a>
                      <ul class="nav nav-treeview border">
                          <li class="nav-item">
-                             <a href="#" class="nav-link">
+                             <a href="{{ url('query') }}" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>All Requisition</p>
+                                 <p>Queries</p>
                              </a>
                          </li>
                          <li class="nav-item">
                              <a href="#" class="nav-link">
                                  <i class="far fa-circle nav-icon"></i>
-                                 <p>All Outputs</p>
+                                 <p>All Queries</p>
                              </a>
                          </li>
                      </ul>
@@ -198,7 +198,7 @@
                      <a href="#" class="nav-link">
                          <i class="nav-icon fas fa-file-powerpoint"></i>
                          <p>
-                             Business Intelligence
+                             Reports
                              <i class="fas fa-angle-left right"></i>
                          </p>
                      </a>

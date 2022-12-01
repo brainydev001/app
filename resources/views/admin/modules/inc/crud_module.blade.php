@@ -1,45 +1,93 @@
 {{-- check for type and determine the form method and route --}}
 
 @if ($type == 'Activity' || $type == 'Event')
-    <!-- Main content for events and activities-->
-    <section class="content mt-3">
-        <div class="row">
-            <div class="col-md-6">
-                {{-- project details --}}
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">General Information</h3>
+    <form action="{{ route('store', $type) }}" method="post">
+        @csrf
+        <!-- Main content for events and activities-->
+        <section class="content m-3">
+            <div class="row">
+                <div class="col-md-6">
+                    {{-- project details --}}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">General Information</h3>
 
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
-                                title="Collapse">
-                                <i class="fas fa-minus"></i></button>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                    data-toggle="tooltip" title="Collapse">
+                                    <i class="fas fa-minus"></i></button>
+                            </div>
                         </div>
+                        <div class="card-body">
+                            {{-- name --}}
+                            <div class="form-group">
+                                <label for="inputName">{{ $type }} Name</label>
+                                <input type="text" name="name" class="form-control">
+                            </div>
+
+                            {{-- description --}}
+                            <div class="form-group">
+                                <label for="inputDescription">Description</label>
+                                <textarea name="description" class="form-control" rows="4"></textarea>
+                            </div>
+
+                            {{-- team leader --}}
+                            <div class="form-group">
+                                <label for="inputDescription">Team leader</label>
+                                <select name="staff_id" class="form-control">
+                                    <option value="" disabled></option>
+                                    @if (count($staffs))
+                                        @foreach ($staffs as $staff)
+                                            <option value="{{ $staff->id }}">{{ $staff->first_name }}
+                                                {{ $staff->last_name }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled></option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <div class="card-body">
-                        {{-- name --}}
-                        <div class="form-group">
-                            <label for="inputName">{{ $type }} Name</label>
-                            <input type="text" name="name" class="form-control">
-                        </div>
 
-                        {{-- descreption --}}
-                        <div class="form-group">
-                            <label for="inputDescription">Description</label>
-                            <textarea name="description" class="form-control" rows="4"></textarea>
-                        </div>
+                    {{-- timeline details --}}
+                    <div class="card card-warning">
+                        {{-- project timeline --}}
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ $type }} Timeline</h3>
 
-                        {{-- team leader --}}
-                        <div class="form-group">
-                            <label for="inputDescription">Team leader</label>
-                            <input type="text" name="team_leader" class="form-control">
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"
+                                        data-toggle="tooltip" title="Collapse">
+                                        <i class="fas fa-minus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {{-- start date --}}
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">Start Date & Time</label>
+                                    <input type="datetime-local" name="start_date" class="form-control">
+                                </div>
+
+                                {{-- end date --}}
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">End Date & Time</label>
+                                    <input type="datetime-local" name="end_date" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- /.card-body -->
                         </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-body -->
+
+                    <!-- /.card -->
                 </div>
 
+                {{-- project location --}}
                 {{-- location card --}}
-                <div class="card card-warning">
+                <div class="card card-warning col-md-6 ">
                     <div class="card-header">
                         <h3 class="card-title">{{ $type }} Location</h3>
 
@@ -73,8 +121,9 @@
                         {{-- region --}}
                         <div class="form-group">
                             <label for="inputDescription">Region</label>
-                            <select name="region" class="form-control region @error('region') form-invalid @enderror"
-                                value="{{ old('region') }}">
+                            <select name="region_id"
+                                class="form-control region_id @error('region_id') form-invalid @enderror"
+                                value="{{ old('region_id') }}">
                                 <option value="" disabled selected>Select region</option>
                                 @if (count($regions) > 0)
                                     @foreach ($regions as $region)
@@ -89,9 +138,9 @@
                         {{-- contituency --}}
                         <div class="form-group">
                             <label for="inputDescription">Constituency</label>
-                            <select name="constituency"
-                                class="form-control constituency @error('constituency') form-invalid @enderror"
-                                value="{{ old('constituency') }}">
+                            <select name="constituency_id"
+                                class="form-control constituency_id @error('constituency_id') form-invalid @enderror"
+                                value="{{ old('constituency_id') }}">
                                 <option value="" disabled selected>Select constituency</option>
                                 @if (count($constituencies) > 0)
                                     @foreach ($constituencies as $constituency)
@@ -106,8 +155,8 @@
                         {{-- ward --}}
                         <div class="form-group">
                             <label for="inputDescription">Ward</label>
-                            <select name="ward" class="form-control ward @error('ward') form-invalid @enderror"
-                                value="{{ old('ward') }}">
+                            <select name="ward_id" class="form-control ward_id @error('ward_id') form-invalid @enderror"
+                                value="{{ old('ward_id') }}">
                                 <option value="" disabled selected>Select ward</option>
                                 @if (count($wards) > 0)
                                     @foreach ($wards as $ward)
@@ -120,69 +169,24 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
+                    {{-- hidden inputs --}}
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="created_by" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="updated_by" value="{{ auth()->user()->id }}">
                 </div>
+
                 <!-- /.card -->
             </div>
-
-            <div class="col-md-6">
-                {{-- project timeline --}}
-                <div class="card card-secondary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $type }} Timeline</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                data-toggle="tooltip" title="Collapse">
-                                <i class="fas fa-minus"></i></button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        {{-- start date --}}
-                        <div class="form-group">
-                            <label for="inputEstimatedBudget">Start Date & Time</label>
-                            <input type="datetime-local" name="start_date" class="form-control">
-                        </div>
-
-                        {{-- end date --}}
-                        <div class="form-group">
-                            <label for="inputEstimatedBudget">End Date & Time</label>
-                            <input type="datetime-local" name="end_date" class="form-control">
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-
-                {{-- attachment --}}
-                <div class="card card-secondary">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ $type }} Attachment(s)</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"
-                                data-toggle="tooltip" title="Collapse">
-                                <i class="fas fa-minus"></i></button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        {{-- attachment --}}
-                        <div class="form-group">
-                            <label for="inputEstimatedBudget">{{ $type }} Files</label>
-                            <input type="file" name="file" class="form-control">
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="#" class="btn btn-secondary">Cancel</a>
-                <input type="submit" value="Create {{ $type }}" class="btn btn-success float-right">
+            <div class="row">
+                <div class="col-12">
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" value="Create {{ $type }}" class="btn btn-success float-right">
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- /.content -->
+        </section>
+        <!-- /.content -->
+    </form>
 @else
     <!-- Main content -->
     <section class="content">
@@ -201,158 +205,137 @@
                         <i class="fas fa-times"></i></button>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body m-2 p-3">
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                         <div class="row">
-                            <div class="col-12 col-sm-4">
-                                <div class="info-box bg-light">
-                                    <div class="info-box-content">
-                                        <span class="info-box-text text-center text-muted">Estimated budget</span>
-                                        <span class="info-box-number text-center text-muted mb-0">2300</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-4">
-                                <div class="info-box bg-light">
-                                    <div class="info-box-content">
-                                        <span class="info-box-text text-center text-muted">Total amount spent</span>
-                                        <span class="info-box-number text-center text-muted mb-0">2000</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-4">
-                                <div class="info-box bg-light">
-                                    <div class="info-box-content">
-                                        <span class="info-box-text text-center text-muted">Estimated project
-                                            duration</span>
-                                        <span class="info-box-number text-center text-muted mb-0">20 <span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col-12">
-                                <h4>Recent Activity</h4>
-                                <div class="post">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg"
-                                            alt="user image">
-                                        <span class="username">
-                                            <a href="#">Jonathan Burke Jr.</a>
-                                        </span>
-                                        <span class="description">Shared publicly - 7:45 PM today</span>
-                                    </div>
-                                    <!-- /.user-block -->
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore.
-                                    </p>
+                                <h4>Module Activities and Events</h4>
+                                {{-- cards --}}
+                                <form action="{{ route('create_module') }}" method="POST">
+                                    @csrf
+                                    <!-- /.card -->
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-body">
+                                            <h4>Input Forms</h4>
+                                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="custom-content-below-home-tab"
+                                                        data-toggle="pill" href="#custom-content-below-home"
+                                                        role="tab" aria-controls="custom-content-below-home"
+                                                        aria-selected="true">Name</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="custom-content-below-profile-tab"
+                                                        data-toggle="pill" href="#custom-content-below-profile"
+                                                        role="tab" aria-controls="custom-content-below-profile"
+                                                        aria-selected="false">Activites</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="custom-content-below-messages-tab"
+                                                        data-toggle="pill" href="#custom-content-below-messages"
+                                                        role="tab" aria-controls="custom-content-below-messages"
+                                                        aria-selected="false">Events</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="custom-content-below-settings-tab"
+                                                        data-toggle="pill" href="#custom-content-below-settings"
+                                                        role="tab" aria-controls="custom-content-below-settings"
+                                                        aria-selected="false">Modules</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="custom-content-below-tabContent">
+                                                <div class="tab-pane fade show active" id="custom-content-below-home"
+                                                    role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+                                                    {{-- module name --}}
+                                                    <div class="p-3">
+                                                        <label for="">Milestone Name</label>
+                                                        <input type="text" name="file" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="custom-content-below-profile"
+                                                    role="tabpanel"
+                                                    aria-labelledby="custom-content-below-profile-tab">
+                                                    <div class="p-3">
+                                                        <label for="">Activities</label>
+                                                        @if (count($activites) > 0)
+                                                            <div class="row">
+                                                                @foreach ($activites as $activity)
+                                                                    <div class="col-4">
+                                                                        <label for="">{{ $activity->name }}
+                                                                            <input type="checkbox"
+                                                                                name="activity_id[]"
+                                                                                value="{{ $activity->id }}">
+                                                                        </label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @else
+                                                            No Activities Recorded
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="custom-content-below-messages"
+                                                    role="tabpanel"
+                                                    aria-labelledby="custom-content-below-messages-tab">
+                                                    <div class="p-3">
+                                                        <label for="">Events</label>
+                                                        @if (count($events) > 0)
+                                                            <div class="row">
+                                                                @foreach ($events as $event)
+                                                                    <div class="col-4">
+                                                                        <label for="">{{ $event->name }}
+                                                                            <input type="checkbox" name="event_id[]"
+                                                                                value="{{ $activity->id }}">
+                                                                        </label>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @else
+                                                            No Events Recorded
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="custom-content-below-settings"
+                                                    role="tabpanel"
+                                                    aria-labelledby="custom-content-below-settings-tab">
+                                                    <div class="p-3">
+                                                        <label for="">Module Name</label>
+                                                        <select name="relation_id" class="form-control">
+                                                            @if (count($milestones) > 0)
+                                                                @foreach ($milestones as $module)
+                                                                    <option value="{{ $module->id }}" class="text-black">
+                                                                        {{ $module->name }} </option>
+                                                                @endforeach
+                                                        </select>
+                                                    @else
+                                                        <input type="text" class="form-control" name="relation_id"
+                                                            value="null">
+@endif
+</div>
+<div class="text-right">
+    <button class="btn btn-warning" type="submit">
+        Submit
+    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- /.card -->
+</div>
+<!-- /.card -->
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /.card-body -->
+</div>
 
-                                    <p>
-                                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i>
-                                            Demo File 1 v2</a>
-                                    </p>
-                                </div>
-
-                                <div class="post clearfix">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg"
-                                            alt="User Image">
-                                        <span class="username">
-                                            <a href="#">Sarah Ross</a>
-                                        </span>
-                                        <span class="description">Sent you a message - 3 days ago</span>
-                                    </div>
-                                    <!-- /.user-block -->
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore.
-                                    </p>
-                                    <p>
-                                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i>
-                                            Demo File 2</a>
-                                    </p>
-                                </div>
-
-                                <div class="post">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg"
-                                            alt="user image">
-                                        <span class="username">
-                                            <a href="#">Jonathan Burke Jr.</a>
-                                        </span>
-                                        <span class="description">Shared publicly - 5 days ago</span>
-                                    </div>
-                                    <!-- /.user-block -->
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore.
-                                    </p>
-
-                                    <p>
-                                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i>
-                                            Demo File 1 v1</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> AdminLTE v3</h3>
-                        <p class="text-muted">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt
-                            tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi,
-                            qui irure terr.</p>
-                        <br>
-                        <div class="text-muted">
-                            <p class="text-sm">Client Company
-                                <b class="d-block">Deveint Inc</b>
-                            </p>
-                            <p class="text-sm">Project Leader
-                                <b class="d-block">Tony Chicken</b>
-                            </p>
-                        </div>
-
-                        <h5 class="mt-5 text-muted">Project files</h5>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i
-                                        class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i
-                                        class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i
-                                        class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i>
-                                    Logo.png</a>
-                            </li>
-                            <li>
-                                <a href="" class="btn-link text-secondary"><i
-                                        class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
-                            </li>
-                        </ul>
-                        <div class="text-center mt-5 mb-3">
-                            <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                            <a href="#" class="btn btn-sm btn-warning">Report contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-    </section>
-    <!-- /.content -->
-    <!-- /.content-wrapper -->
+</section>
+<!-- /.content -->
+<!-- /.content-wrapper -->
 @endif
 
 <!-- /.content-wrapper -->

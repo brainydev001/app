@@ -16,17 +16,21 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('descripion');
+            $table->string('description');
+            $table->foreignId('staff_id');
             $table->string('start_date');
             $table->string('end_date');
             $table->foreignId('user_id');
-            $table->foreignId('attachment_id');
+            $table->foreignId('attachment_id')->nullable();
             $table->string('county');
             $table->string('sub_county');
+            $table->foreignId('constituency_id');
             $table->foreignId('region_id');
             $table->foreignId('ward_id');
             $table->foreignId('created_by');
             $table->foreignId('updated_by');
+            $table->boolean('is_approved')->default(false);
+            $table->foreignId('approved_by')->nullable();
             $table->timestamps();
         });
     }

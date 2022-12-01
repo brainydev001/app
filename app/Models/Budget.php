@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Region extends Model
+class Budget extends Model
 {
     use HasFactory;
 
@@ -13,11 +13,10 @@ class Region extends Model
     public $guarded = [];
 
     /**
-     * Get user who created this region.
+     * Get user who created this budget.
      */
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');  
     }
-    
 }

@@ -33,16 +33,16 @@
                         <tr>
                             <td>{{ $data->name }}</td>
                             @if ($type == 'Event' || $type == 'Activity')
-                                <td>{{ $data->start_time }}</td>
-                                <td>{{ $data->end_time }}</td>
+                                <td>{{ $data->start_date }}</td>
+                                <td>{{ $data->end_date }}</td>
                                 <td>{{ $data->county }}</td>
-                                <td>{{ $data->region }}</td>
+                                <td>{{ $data->regions->name }}</td>
                             @endif
-                            <td>{{ $data->created_at->diffForHumans() }}</td>
+                            <td>{{ $data->created_at }}</td>
                             <td class="border-none d-flex">
-                                <a href="{{ url('module_view/' . $data->id) }}" class="ml-4">
+                                <a href="{{ route ('module_view', [$data->id, $type]) }}" class="ml-4">
                                     <i class="fa fa-eye text-green"></i>
-                                </a>
+                                </a> 
                                 <a href="{{ url('module_edit/' . $data->id) }}" class="ml-4">
                                     <i class="fa fa-edit text-blue"></i>
                                 </a>

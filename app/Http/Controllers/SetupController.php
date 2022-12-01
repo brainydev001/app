@@ -106,8 +106,9 @@ class SetupController extends Controller
             $admin_user = [
                 'first_name' => 'System',
                 'last_name' => 'Administrator',
-                'phone_number' => $no_data,
+                'phone_number' => '0722931145',
                 'age' => $no_data,
+                'gender' => $no_data,
                 'email' => 'admin@pafidkenya.org',
                 'county' => $no_data,
                 'sub_county' => $no_data,
@@ -116,12 +117,13 @@ class SetupController extends Controller
                 'ward_id' => '0',
                 'type_id' => $type->id,
                 'password' => Hash::make('pafidsysadmin001'),
+                'is_approved' => true
             ];
             $sys_user = User::create($admin_user);
 
-            // update admin data to correct created by
+            // update type data to correct created by
             $update = [
-                'created_by' => $sys_user->id
+                'created_by' => $sys_user->id,
             ];
             $type = Type::find($type->id);
             $type->update($update);

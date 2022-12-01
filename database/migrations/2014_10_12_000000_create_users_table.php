@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone_number');
             $table->string('age');
+            $table->string('gender');
             $table->string('email')->nullable();
             $table->string('county');
             $table->string('sub_county');
@@ -29,6 +30,8 @@ return new class extends Migration
             $table->foreignId('type_id');
             $table->timestamp('last_seen')->nullable();
             $table->string('password');
+            $table->boolean('is_approved')->default(false);
+            $table->foreignId('approved_by')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
